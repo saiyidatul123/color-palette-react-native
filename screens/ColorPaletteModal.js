@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   View,
   Text,
   TextInput,
@@ -261,6 +260,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: 'grey',
   },

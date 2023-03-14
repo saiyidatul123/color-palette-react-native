@@ -1,13 +1,4 @@
-// import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from './screens/Home';
 import ColorPalette from './screens/ColorPalette';
@@ -31,8 +22,6 @@ const MainStackScreen = () => {
 };
 
 const App = () => {
-  // console.warn('This is a warning message example');
-  // console.error('This is an error message example');
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ presentation: 'modal' }}>
