@@ -185,7 +185,9 @@ const ColorPaletteModal = ({ navigation }) => {
       setSelectedColors((colors) => [...colors, color]);
     } else {
       setSelectedColors((colors) =>
-        colors.filter((selectedColors) => color.colorName !== selectedColors.colorName),
+        colors.filter(
+          (selectedColors) => color.colorName !== selectedColors.colorName,
+        ),
       );
     }
   }, []);
@@ -205,7 +207,10 @@ const ColorPaletteModal = ({ navigation }) => {
           keyExtractor={(item) => item.colorName}
           renderItem={({ item }) => (
             <View style={styles.scrollInput}>
-              <Text>{item.colorName}</Text>
+              <View
+                style={[{ backgroundColor: item.hexCode }, styles.box]}
+              ></View>
+              <Text style={styles.textInput}>{item.colorName}</Text>
               <Switch
                 value={
                   !!selectedColors.find(
@@ -248,6 +253,9 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 2,
   },
+  textInput: {
+    textAlign: 'left',
+  },
   scrollInput: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -255,6 +263,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderColor: 'grey',
+  },
+  box: {
+    height: 30,
+    width: 30,
+    marginRight: 10,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 2,
+    padding: 20,
   },
 });
 
