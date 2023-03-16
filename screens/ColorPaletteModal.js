@@ -179,17 +179,30 @@ const ColorPaletteModal = ({ navigation }) => {
     }
   }, [name, selectedColors]);
 
-  const handleValueChange = useCallback((value, color) => {
-    if (value === true) {
-      setSelectedColors((colors) => [...colors, color]);
-    } else {
-      setSelectedColors((colors) =>
-        colors.filter(
-          (selectedColors) => color.colorName !== selectedColors.colorName,
-        ),
+  // const handleValueChange = useCallback((value, color) => {
+  //   if (value === true) {
+  //     setSelectedColors((colors) => [...colors, color]);
+  //   } else {
+  //     setSelectedColors((colors) =>
+  //       colors.filter(
+  //         (selectedColors) => color.colorName !== selectedColors.colorName,
+  //       ),
+  //     );
+  //   }
+  // }, []);
+
+  const handleValueChange = (item) => {
+    if (selectedColors.includes(item.colorName)) {
+      setSelectedColors((current) =>
+        current.filter((colors) => item.colorName != colors),
       );
+    } else {
+      setSelectedColors((selectedColors) => [
+        ...selectedColors,
+        item.colorName,
+      ]);
     }
-  }, []);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -212,12 +225,10 @@ const ColorPaletteModal = ({ navigation }) => {
               <Text style={styles.textInput}>{item.colorName}</Text>
               <Switch
                 value={
-                  !!selectedColors.find(
-                    (color) => color.colorName !== item.colorName,
-                  )
+                  selectedColors.includes(item.colorName)
                 }
-                onValueChange={(selected) => {
-                  handleValueChange(selected, item);
+                onValueChange={() => {
+                  handleValueChange(item);
                 }}
               />
             </View>
