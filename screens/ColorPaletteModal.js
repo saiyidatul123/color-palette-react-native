@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -165,43 +165,32 @@ const ColorPaletteModal = ({ navigation }) => {
   const [name, setName] = useState('');
   const [selectedColors, setSelectedColors] = useState([]);
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     if (!name) {
+      console.log('Please enter the color palette name');
       Alert.alert('', 'Please enter the color palette name');
     } else if (selectedColors.length < 3) {
+      console.log('Please add at least 3 colors');
       Alert.alert('', 'Please add at least 3 colors');
     } else {
       const newColorPalette = {
         paletteName: name,
         colors: selectedColors,
       };
+      // console.log('handleSubmit : ' + newColorPalette);
       navigation.navigate('Home', { newColorPalette });
     }
-  }, [name, selectedColors]);
-
-  // const handleValueChange = useCallback((value, color) => {
-  //   if (value === true) {
-  //     setSelectedColors((colors) => [...colors, color]);
-  //   } else {
-  //     setSelectedColors((colors) =>
-  //       colors.filter(
-  //         (selectedColors) => color.colorName !== selectedColors.colorName,
-  //       ),
-  //     );
-  //   }
-  // }, []);
+  };
 
   const handleValueChange = (item) => {
-    if (selectedColors.includes(item.colorName)) {
+    if (selectedColors.some((arr) => arr.colorName == item.colorName)) {
       setSelectedColors((current) =>
-        current.filter((colors) => item.colorName != colors),
+        current.filter((colors) => item.colorName != colors.colorName),
       );
     } else {
-      setSelectedColors((selectedColors) => [
-        ...selectedColors,
-        item.colorName,
-      ]);
+      setSelectedColors((selectedColors) => [...selectedColors, item]);
     }
+    console.log(`handleValueChange:${selectedColors}`);
   };
 
   return (
@@ -224,9 +213,9 @@ const ColorPaletteModal = ({ navigation }) => {
               ></View>
               <Text style={styles.textInput}>{item.colorName}</Text>
               <Switch
-                value={
-                  selectedColors.includes(item.colorName)
-                }
+                value={selectedColors.some(
+                  (arr) => arr.colorName == item.colorName,
+                )}
                 onValueChange={() => {
                   handleValueChange(item);
                 }}
